@@ -11,7 +11,7 @@ const tryAgainButton = document.getElementById('reloadButton');
 
 // game-level vars
 let score = 0;
-let pokemonsEncountered = 1;
+let pokemonsEncountered = 0;
 
 // question-level vars
 let mcqOptions = [];
@@ -216,6 +216,9 @@ function updateScoreDisplay() {
 }
 
 console.log('Gotta ketchum all!');
+
+pokemonsEncountered++;
+updateScoreDisplay();
 generateQuestion(); // generate the first question
 
 /*

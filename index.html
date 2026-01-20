@@ -10,17 +10,18 @@
 
 	<p>Current Score: <span id="score-display">0</span></p>
 	<p>Pokemons Encountered: <span id="pokemons-encountered">0</span></p>
+	
 	<!-- the countdown-timer's start value is cosmetic, actual value in seconds, is controlled in script.js -->
-	<p><span id="countdown-timer">2:00</p>
+	<p><span id="countdown-timer">1:00</p>
   
   <div id="game-container">
     <img id="pokemon-image" alt="A mysterious Pokémon">
+    <div id="options" class="options"></div>
     <p></p>
-    <input type="text" id="guess-input" placeholder="Enter Pokémon name">
-    <button id="submit-guess">Submit Guess</button>
-    <p id="message"></p>
-    <button id="next-pokemon" style="display: none;">Next Pokemon</button>
+		<div id="result" class="result"></div>
+    <div><button class="center-margin" id="reloadButton" style="display: none;" onclick="reloadPage()">Try again</button></div>
   </div>
+  
   <script src="script.js"></script>
 </body>
 </html>

@@ -10,7 +10,6 @@ const resultElement = document.getElementById('result');
 const tryAgainButton = document.getElementById('reload-button');
 
 const hiScore = document.getElementById('hi-score');
-const gamesPlayed = document.getElementById('games-played');
 const resetStatsButton = document.getElementById('reset-stats-button');
 
 // game-level vars
@@ -43,15 +42,18 @@ const countdownInterval = setInterval( () => {
 		// otherwise, user can still submit one last guess, AFTER time is up!
 		mcqButtons.innerHTML = '';
 		resultElement.textContent = '';
-		timerDisplay.textContent = 'Time\'s up!';
-
+		
 		// TO DO? call a backend API, to submit scores for current user, for user stats persistence
 		
 		// increment the number of games played by one
 		let games_played_record = localStorage.getItem('numGamesPlayed');
 		games_played_record++;
 		localStorage.setItem('numGamesPlayed', games_played_record);
-		gamesPlayed.textContent = games_played_record;
+		if (games_played_record > 1) {
+			timerDisplay.textContent = 'Time\'s up! You have played ' + games_played_record + ' times';
+		} else {
+			timerDisplay.textContent = 'Thank you for trying out Pokemon Guessr';
+		}
 		
 		// Instead of storing user stats in a backend db, we can store it client-side (in localStorage)
 		let prev_hi_score = localStorage.getItem('gameScore');
@@ -110,8 +112,8 @@ async function fetchPokemonName(id) {
     const data = await response.json();
     const name = data.name;
 		
-		mcqOptions.push(name);
-		console.log("fpn(): ", id, name); // debug
+	mcqOptions.push(name);
+	//console.log("fpn(): ", id, name); // debug
 
   } catch (error) {
     console.error("Error fetching Pokémon's name: ", error);
@@ -223,7 +225,8 @@ function checkAnswer(index) {
 
 	// default is 1 second delay, to show result of choice
 	// option to vary the delay for correct/wrong submission
-	if (timeLeft > 0) {
+	// NOTE. if timeLeft > 0, ie. when timeLeft == 1, it may cause generateQuestion to be called AFTER time runs out...
+	if (timeLeft > 2) {
 			if (correctFlag) {
 				setTimeout(() => {
 					resultElement.textContent = "";
@@ -244,15 +247,15 @@ function updateScoreDisplay() {
 }
 
 console.log('Gotta ketchum all!');
+hiScore.textContent = localStorage.getItem('gameScore'); // get high score (only show, after 1st game!)
 
-pokemonsEncountered++;
-gamesPlayed.textContent = localStorage.getItem('numGamesPlayed')
-hiScore.textContent = localStorage.getItem('gameScore')
+pokemonsEncountered++; 
 updateScoreDisplay();
+
 generateQuestion(); // generate the first question
 
 /*
-last updated 2026_01_02
+last updated 2026_01_24
 
 changelog
 
@@ -270,4 +273,5 @@ v9, ensure that AFTER user clicks on an option, removed mcqOptions from FE,
 also ensured that after timeOver, mcqOptions are removed, to prevent one last try, that can take forever
 v10, added a "try again" button (and its supporting functionality) so that after the time runs out, a user can try again, WITHOUT having to refresh the webpage via the browser
 v11, implemented 2 features: (1) tracking of high score and numGamesPlayed, using localStorage; (2) reset stats button
+v12, changed "if (timeLeft > 0)" to "if (timeleft > 2)", to avoid undesired scenario of generating question AFTER time runs out. Note. generateQuestion() will only be called AFTER 1 second of delay
 */

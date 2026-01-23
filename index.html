@@ -7,7 +7,9 @@
 </head>
 <body>
 	<h1>Pokémon Guessr</h1>
-
+  <h2>Your high score is <span id="hi-score">0</span> after playing <span id="games-played">0</span> games</h2>
+  <p><button class="center-margin" id="reset-stats-button" style="display: none;" onclick="resetStats()">Reset stats & Try again</button></p>
+  <p></p>
 	<p>Current Score: <span id="score-display">0</span></p>
 	<p>Pokemons Encountered: <span id="pokemons-encountered">0</span></p>
 	
@@ -19,7 +21,7 @@
     <div id="options" class="options"></div>
     <p></p>
 		<div id="result" class="result"></div>
-    <div><button class="center-margin" id="reloadButton" style="display: none;" onclick="reloadPage()">Try again</button></div>
+    <p><button class="center-margin" id="reload-button" style="display: none;" onclick="reloadPage()">Keep your stats & Try again</button></p>
   </div>
   
   <script src="script.js"></script>

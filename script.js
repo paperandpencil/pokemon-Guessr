@@ -7,7 +7,11 @@ const timerDisplay = document.getElementById('countdown-timer');
 const pokemonImage = document.getElementById('pokemon-image');
 const mcqButtons = document.getElementById('options');
 const resultElement = document.getElementById('result');
-const tryAgainButton = document.getElementById('reloadButton');
+const tryAgainButton = document.getElementById('reload-button');
+
+const hiScore = document.getElementById('hi-score');
+const gamesPlayed = document.getElementById('games-played');
+const resetStatsButton = document.getElementById('reset-stats-button');
 
 // game-level vars
 let score = 0;
@@ -34,24 +38,48 @@ const countdownInterval = setInterval( () => {
 
 	if (timeLeft < 0) {
 		clearInterval(countdownInterval); // stop the countdown timer
-		timerDisplay.textContent = 'Time\'s up!';
-
+		
 		// need to "clear the screen" by removing mcqButtons
 		// otherwise, user can still submit one last guess, AFTER time is up!
 		mcqButtons.innerHTML = '';
 		resultElement.textContent = '';
+		timerDisplay.textContent = 'Time\'s up!';
 
-		// TO DO, call API, to submit scores for current user, for user stats persistence
-		//console.log("call a BE API, to submit stats for this game, to be logged into a db");
+		// TO DO? call a backend API, to submit scores for current user, for user stats persistence
+		
+		// increment the number of games played by one
+		let games_played_record = localStorage.getItem('numGamesPlayed');
+		games_played_record++;
+		localStorage.setItem('numGamesPlayed', games_played_record);
+		gamesPlayed.textContent = games_played_record;
+		
+		// Instead of storing user stats in a backend db, we can store it client-side (in localStorage)
+		let prev_hi_score = localStorage.getItem('gameScore');
+		if (score > prev_hi_score) {
+			localStorage.setItem('gameScore', score); // store in client-side
+			hiScore.textContent = score; // update hi score to be displayed
+			resultElement.textContent = "Congratulations! " + score + " is your new high score!"; 
+		} else if (score == prev_hi_score) {
+			resultElement.textContent = "Not bad... You have equalled your previous high score of " + score + "";
+		}
 
 		// unhide/show "Try Again" button
 		tryAgainButton.style.display = 'block';
+
+		// unhide/show "reset Stats" button
+		resetStatsButton.style.display = 'block';
 	}
 		
 }, 1000); // update every 1000 milliseconds (1 second)
 
 function reloadPage() {
 	window.location.reload();
+}
+
+function resetStats() {
+	localStorage.setItem('numGamesPlayed', 0);
+	localStorage.setItem('gameScore', 0);
+	reloadPage();
 }
 
 // generate a subset of pokemon IDs, from all possible pokemons; no repeats
@@ -218,6 +246,8 @@ function updateScoreDisplay() {
 console.log('Gotta ketchum all!');
 
 pokemonsEncountered++;
+gamesPlayed.textContent = localStorage.getItem('numGamesPlayed')
+hiScore.textContent = localStorage.getItem('gameScore')
 updateScoreDisplay();
 generateQuestion(); // generate the first question
 
@@ -239,4 +269,5 @@ complementary checkAnswer() w/ option for variable feedback delay
 v9, ensure that AFTER user clicks on an option, removed mcqOptions from FE,
 also ensured that after timeOver, mcqOptions are removed, to prevent one last try, that can take forever
 v10, added a "try again" button (and its supporting functionality) so that after the time runs out, a user can try again, WITHOUT having to refresh the webpage via the browser
+v11, implemented 2 features: (1) tracking of high score and numGamesPlayed, using localStorage; (2) reset stats button
 */

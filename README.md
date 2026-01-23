@@ -11,3 +11,5 @@ If you guess wrong, the game will show you the Pokemon's name, for ONE second, b
 Hope you learn quickly, to match the image with the right name...
 
 After each game, you can either choose to keep OR reset your stats, before you Try again!
+
+<img width="371" height="656" alt="Screenshot 2026-01-24 023253" src="https://github.com/user-attachments/assets/4fb1c91d-8119-44a4-bb11-41262a408941" />

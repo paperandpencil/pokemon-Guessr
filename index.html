@@ -6,9 +6,10 @@
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <p><button class="center-margin" id="go-to-repo-button" style="display: none;" onclick="window.location.href='https://github.com/paperandpencil/pokemon-Guessr'">View the repo in Github</button></p>
 	<h1>Pokémon Guessr</h1>
   <h2><p>Your high score is <span id="hi-score">0</span></p></h2>
-  <p><button class="center-margin" id="reset-stats-button" style="display: none;" onclick="resetStats()">Reset stats & Try again</button></p>
+  <p><button class="center-margin" id="reset-stats-button" style="display: none;" onclick="resetStats()">Reset your stats, and start afresh</button></p>
   <p></p>
 	<p>Current Score: <span id="score-display">0</span></p>
 	<p>Pokemons Encountered: <span id="pokemons-encountered">0</span></p>
@@ -21,7 +22,7 @@
     <div id="options" class="options"></div>
     <p></p>
 		<div id="result" class="result"></div>
-    <p><button class="center-margin" id="reload-button" style="display: none;" onclick="reloadPage()">Keep your stats & Try again</button></p>
+    <p><button class="center-margin" id="reload-button" style="display: none;" onclick="reloadPage()">Try again</button></p>
   </div>
   
   <script src="script.js"></script>

@@ -11,6 +11,7 @@ const tryAgainButton = document.getElementById('reload-button');
 
 const hiScore = document.getElementById('hi-score');
 const resetStatsButton = document.getElementById('reset-stats-button');
+const goToRepoButton = document.getElementById('go-to-repo-button');
 
 // game-level vars
 let score = 0;
@@ -65,11 +66,10 @@ const countdownInterval = setInterval( () => {
 			resultElement.textContent = "Not bad... You have equalled your previous high score of " + score + "";
 		}
 
-		// unhide/show "Try Again" button
+		// unhide/show the following THREE(3) buttons
 		tryAgainButton.style.display = 'block';
-
-		// unhide/show "reset Stats" button
 		resetStatsButton.style.display = 'block';
+		goToRepoButton.style.display = 'block';
 	}
 		
 }, 1000); // update every 1000 milliseconds (1 second)
@@ -274,4 +274,5 @@ also ensured that after timeOver, mcqOptions are removed, to prevent one last tr
 v10, added a "try again" button (and its supporting functionality) so that after the time runs out, a user can try again, WITHOUT having to refresh the webpage via the browser
 v11, implemented 2 features: (1) tracking of high score and numGamesPlayed, using localStorage; (2) reset stats button
 v12, changed "if (timeLeft > 0)" to "if (timeleft > 2)", to avoid undesired scenario of generating question AFTER time runs out. Note. generateQuestion() will only be called AFTER 1 second of delay
+v13, added a button to link to the Github repo (only revealed when game is over)
 */
